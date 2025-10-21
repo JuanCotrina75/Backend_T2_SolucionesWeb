@@ -29,9 +29,6 @@ public class ProductController {
     @Qualifier("defaultMapper")
     private final ModelMapper modelMapper;
 
-    // =============================
-    // 🔹 GET - Listar todos
-    // =============================
     @GetMapping
     public ResponseEntity<List<ProductDTO>> findAll() throws Exception {
         List<ProductDTO> list = service.findAll()
@@ -41,18 +38,12 @@ public class ProductController {
         return ResponseEntity.ok(list);
     }
 
-    // =============================
-    // 🔹 GET - Buscar por ID
-    // =============================
     @GetMapping("/{id}")
     public ResponseEntity<ProductDTO> findById(@PathVariable("id") Integer id) throws Exception {
         Product obj = service.findById(id);
         return ResponseEntity.ok(convertToDto(obj));
     }
 
-    // =============================
-    // 🔹 POST - Registrar nuevo producto
-    // =============================
     @PostMapping
     public ResponseEntity<ProductDTO> save(@Valid @RequestBody ProductDTO dto) throws Exception {
         Product obj = convertToEntity(dto);
@@ -72,9 +63,6 @@ public class ProductController {
         return ResponseEntity.created(location).body(convertToDto(saved));
     }
 
-    // =============================
-    // 🔹 PUT - Actualizar producto
-    // =============================
     @PutMapping("/{id}")
     public ResponseEntity<ProductDTO> update(@PathVariable("id") Integer id,
                                              @Valid @RequestBody ProductDTO dto) throws Exception {
@@ -89,18 +77,12 @@ public class ProductController {
         return ResponseEntity.ok(convertToDto(updated));
     }
 
-    // =============================
-    // 🔹 DELETE - Eliminar producto
-    // =============================
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id) throws Exception {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    // =============================
-    // 🔁 Métodos de conversión
-    // =============================
     private ProductDTO convertToDto(Product obj) {
         ProductDTO dto = modelMapper.map(obj, ProductDTO.class);
 
